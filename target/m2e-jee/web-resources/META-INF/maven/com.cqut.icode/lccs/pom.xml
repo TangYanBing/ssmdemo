@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cqut.icode</groupId>
-	<artifactId>ssmdemo</artifactId>
+	<artifactId>lccs</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ssmdemo</name>
+	<name>lccs</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -222,7 +222,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>ssmdemo</finalName>
+		<finalName>lccs</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>

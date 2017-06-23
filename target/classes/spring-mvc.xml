@@ -47,4 +47,46 @@
         <property name="maxInMemorySize" value="40960" />    
     </bean>   
   
+  
+  	<!-- 以下配置是将mina集成到spring中 -->
+  
+  	<!-- handle -->
+	<bean id='myHandle' class="com.cqut.mina.MyIoHandler"></bean>
+	
+	<!-- 构造协议编解码过滤器 -->
+	<bean id="messageSipcCodecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
+		<constructor-arg>
+			<bean class="com.cqut.mina.MessageCodecFactory">
+				<constructor-arg index="0" type="java.nio.charset.Charset">
+					<value>UTF-8</value>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 构造日志过滤器 -->
+	<bean id="messageSipcloggingFilter" class="org.apache.mina.filter.logging.LoggingFilter" />
+	
+	<!-- 构造过滤器链 -->
+	<bean id="messageSipcFilterChainBuilder"
+		class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
+		<property name="filters">
+			<map>
+				<entry key="messageSipcloggingFilter" value-ref="messageSipcloggingFilter" />
+				<entry key="messageSipcCodecFilter" value-ref="messageSipcCodecFilter" />
+			</map>
+		</property>
+	</bean>
+  	<!-- 配置的端口 -->
+	<bean id='address' class="java.net.InetSocketAddress">
+		<constructor-arg value="5555" type="int" />
+	</bean>
+
+	<!-- 构造Server端 -->
+	<bean id="cmccSipcIoAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor"
+		init-method="bind" destroy-method="unbind">
+		<property name="defaultLocalAddress" ref="address" />
+		<property name="handler" ref="myHandle" />
+		<property name="filterChainBuilder" ref="messageSipcFilterChainBuilder" />
+	</bean>
 </beans> 
